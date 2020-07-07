@@ -45,8 +45,22 @@ if(!empty($_POST)){
 
 
 // prepare and bind
-$stmt = $conn->prepare ("INSERT INTO data (texte1, langue_start, texte2,langue_end,audio,date_enr) VALUES (?, ?, ?,?,?,?)");
-$stmt->bind_param($texte1, $langue_start, $texte2, $langue_end, $target_file, $date);
+ 
+$stmt = $conn->prepare ("INSERT INTO data(texte1, langue_start, texte2, langue_end, audio, date_enr) VALUES (?, ?, ?, ?, ?, ?)");
+var_dump($stmt);
+
+
+//test 
+
+$sql = 'INSERT INTO data(texte1, langue_start, texte2, langue_end, audio, date_enr) VALUES (?, ?, ?, ?, ?, ?)';
+if($query = $conn->prepare($sql)){
+  $stmt->bind_param("sssssd", $texte1, $langue_start, $texte2, $langue_end, $target_file, $date);
+    $query->execute();
+    //rest of code here
+}else{
+   //error !! don't go further
+   var_dump($conn->error);
+}
 
 // set parameters and execute
 $texte1 = "mot";
