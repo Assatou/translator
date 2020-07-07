@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>ivoire translator</title>
-	 <meta charset="utf-8">
+  <title>ivoire translator</title>
+   <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-	  <link type="text/css" rel="stylesheet" href="styl.css">
-	  <link type="text/css" rel="stylesheet" href="insert/ionicons-2.0.1/css/ionicons.min.css">
-	  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="styl.css">
+    <link type="text/css" rel="stylesheet" href="insert/ionicons-2.0.1/css/ionicons.min.css">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 </head>
 <?php include('config.php');
 
@@ -45,8 +45,22 @@ if(!empty($_POST)){
 
 
 // prepare and bind
-$stmt = $conn->prepare ("INSERT INTO data (texte1, langue_start, texte2,langue_end,audio,date_enr) VALUES (?, ?, ?,?,?,?)");
-$stmt->bind_param($texte1, $langue_start, $texte2, $langue_end, $target_file, $date);
+ 
+$stmt = $conn->prepare ("INSERT INTO data(texte1, langue_start, texte2, langue_end, audio, date_enr) VALUES (?, ?, ?, ?, ?, ?)");
+var_dump($stmt);
+
+
+//test 
+
+$sql = 'INSERT INTO data(texte1, langue_start, texte2, langue_end, audio, date_enr) VALUES (?, ?, ?, ?, ?, ?)';
+if($query = $conn->prepare($sql)){
+  $stmt->bind_param("sssssd", $texte1, $langue_start, $texte2, $langue_end, $target_file, $date);
+    $query->execute();
+    //rest of code here
+}else{
+   //error !! don't go further
+  //var_dump($conn->error);
+}
 
 // set parameters and execute
 $texte1 = "mot";
@@ -87,7 +101,7 @@ mysqli_close($conn);
 
 ?>
 <body>
-	 <header>
+   <header>
             <div class="logo">
                <img src="img/logo2.png" width="200" >
             </div>
@@ -119,9 +133,9 @@ mysqli_close($conn);
                  <div class="form-group">
                    <label for="selection">choisir une langue</label>
                    <select id="selection" class="form-control" name="lang">
-                     	<option value="">Liste de choix</option>
-                       <option value="">anglais</option>
-                       <option value="">français</option>
+                      <option value="liste">Liste de choix</option>
+                       <option value="ang">anglais</option>
+                       <option value="franç">français</option>
                     </select>
                  </div>
                   <div class="form-group">
@@ -132,23 +146,23 @@ mysqli_close($conn);
                  <div class="form-group">
                    <label for="selection">Une liste de choix</label>
                    <select id="selection" class="form-control" name="langue">
-                     <option value="">Liste de choix</option>
-                       <option value="">Baoulé</option>
-                       <option value="">Agni</option>
-                       <option value="">Bété</option>
-                       <option value="">Dida</option>
-                       <option value="">Sénoufo</option>
-                       <option value="">Gouro</option>
-                       <option value="">Wobè</option>
-                       <option value="">Tagbanan</option>
-                       <option value="">Gagou</option>
-                       <option value="">Dioula</option>
+                     <option value="choix">Liste de choix</option>
+                       <option value="Baoulé">Baoulé</option>
+                       <option value="Agni">Agni</option>
+                       <option value="bete">Bété</option>
+                       <option value="Dida">Dida</option>
+                       <option value="senoufo">Sénoufo</option>
+                       <option value="Gouro">Gouro</option>
+                       <option value="wobe">Wobè</option>
+                       <option value="Tagbanan">Tagbanan</option>
+                       <option value="Gagou">Gagou</option>
+                       <option value="Dioula">Dioula</option>
                    </select>
                  </div>
                  <div class="form-group col-md-6">
-      			      <label for="inputEmail4">Date d'ajout</label>
-      			      <input type="date" class="form-control" id="inputEmail4" name="date_enr">
-      			    </div>
+                  <label for="inputEmail4">Date d'ajout</label>
+                  <input type="date" class="form-control" id="inputEmail4" name="date_enr">
+                </div>
                  <div class="form-group">
                    <label for="audio">ajouter l'audio</label>
                    <input type="hidden" name="MAX_FILE_SIZE" value="2097152"> <input type="file" name="nom_du_fichier">
@@ -158,7 +172,7 @@ mysqli_close($conn);
                </fieldset>
              </form>
 
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script type="text/javascript" src="app.js"></script>
 
 </body>
